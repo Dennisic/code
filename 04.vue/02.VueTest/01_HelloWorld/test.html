@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01_HelloWorld</title>
+  </head>
+  <body>
+    <!--
+      1. 引入Vue.js
+      2. 创建Vue对象
+        el : 指定根element(选择器)
+        data : 初始化数据(页面可以访问)
+      3. 双向数据绑定 : v-model
+      4. 显示数据 : {{xxx}}
+      5. 理解vue的mvvm实现
+    -->
+    <div id="app">
+      <input type="text" v-model="msg" />
+      <p>{{msg}}</p>
+      <p>{{xxx}}</p>
+      <p>hello vue</p>
+    </div>
+    <!-- 引入Vue.js -->
+    <script src="../js/vue.js"></script>
+    <script>
+      /*
+        一旦引入Vue，全局多一个 Vue
+
+        1. new Vue(配置对象)
+          配置对象文档：https://cn.vuejs.org/v2/api/
+            选项 --> 配置对象的参数
+
+        2. 模板
+          模板页面：整个页面就是模板页面 HMLT + CSS + JS
+          模板语法：
+            1. 插值语法（双大括号表达式）：{{JS表达式}}
+              作用：用来动态展示Vue中的数据
+
+            2. 指令语法：作为元素标签属性 v-xxx="JS表达式" 
+              v-model：给元素标签进行双向数据绑定
+                数据双向绑定：
+                  当页面出现数据展示时：数据由 数据层（JS） 自动流向 视图层（页面）
+                  当你修改input的内容时， 
+                    数据先由 视图层（页面） 自动流向 数据层（JS） 
+                    数据再由 数据层（JS） 自动流向 视图层（页面） 从而其他地方使用数据的内容也发生了变化
+
+            注意：表达式不是所有表达式
+              OK：fn fn()  a   a ? true : false
+              不OK： if else  for
+
+        3. 表达式&语句的区别
+          1. 表达式
+            - 没有分号
+            - 一定会有返回值（返回值可能是undefined）
+
+          2. 语句
+            - 有分号（没有分号，在JS编译时会自动添加分号）
+            - 没有返回值
+
+          const a = 123 // 语句
+          a // 表达式
+          123 // 表达式
+          a; // 语句
+
+          function fn() {} // 语句
+          const fn = () => {} // 函数表达式语句
+          fn // 表达式
+          fn() // 表达式
+          fn(); // 语句
+
+          if (a > 1) {} // 语句
+          a > 1 // 表达式
+
+        4. MVVM
+          MVC
+            M - Model 数据层（用来存储数据）
+            V - View 视图层 (用来展示页面)
+            C - Controller 控制层 (操作Model的数据显示到View页面上)
+          MVVM：Vue设计
+            M - Model 数据层（JS中的data数据）
+            V - View 视图层 （模板页面）
+            VM - ViewModel：实现数据双向绑定
+              View --> Model：指令语法 v-model
+                通过绑定DOM事件实现的
+              Model --> View：插值语法 {{xxx}}
+                通过数据绑定实现的
+      */
+      // vm是Vue的实例对象
+      const vm = new Vue({
+        // 配置对象：属性名固定对象
+        // el: "#app", // 元素element：用来获取DOM元素  内部通过querySelector获取
+        data: {
+          // 数据: 用来保存页面需要使用动态数据
+          msg: "hello vue",
+          xxx: "yyy",
+        },
+      });
+
+      vm.$mount("#app");
+
+      console.log(vm);
+    </script>
+  </body>
+</html>

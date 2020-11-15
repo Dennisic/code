@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自定义Promise</title>
+  </head>
+  <body>
+    <script src="./MyPromise.js"></script>
+    <script>
+      const promise1 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(111);
+        }, 3000);
+      });
+      const promise2 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          reject(222);
+        }, 2000);
+      });
+
+      const promise3 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(333);
+        }, 1000);
+      });
+
+      MyPromise.allSettled([promise1, promise2, promise3])
+        .then((value) => {
+          console.log("value", value);
+        })
+        .catch((reason) => {
+          console.log("reason", reason);
+        });
+
+      /* const promise = new MyPromise((resolve, reject) => {
+        reject(123);
+      });
+
+      promise
+        .then((value) => {
+          console.log(111, value);
+          return 456;
+        })
+        .finally((value) => {
+          console.log(333, value);
+          // return new MyPromise((resolve, reject) => {
+          //   reject(789);
+          // });
+          throw 789;
+        })
+        .then((value) => {
+          console.log(444, value);
+        })
+        .catch((reason) => {
+          console.log(555, reason);
+        }); */
+
+      /* promise
+        .then((value) => {
+          console.log(111, value);
+          // return 123
+          // return new Promise(() => {});
+          // console.log(aaa);
+          return 456;
+        })
+        .catch((reason) => {
+          console.log(222, reason);
+          // return 123
+          // return new Promise(() => {});
+          // console.log(aaa);
+        })
+        .then((value) => {
+          console.log(333, value);
+        })
+        .catch((reason) => {
+          console.log(444, reason);
+        });
+ */
+      /* promise
+        .then(
+          (value) => {
+            // 当promise对象变成resolved状态时，会异步调用当前函数
+            // 成功的回调函数
+            console.log(111, value);
+
+            // console.log(aa);
+            return new MyPromise((resolve, reject) => {
+              resolve(456)
+            });
+            // return 456;
+          },
+          (reason) => {
+            // 当promise对象变成rejected状态时，会异步调用当前函数
+            // 失败的回调函数
+            console.log(222, reason);
+            return new MyPromise((resolve, reject) => {
+              reject(456)
+            });
+          }
+        )
+        .then(
+          (value) => {
+            console.log("resolved", value);
+          },
+          (reason) => {
+            console.log("rejected", reason);
+          }
+        );
+
+      console.log("全局代码执行完了"); */
+    </script>
+  </body>
+</html>

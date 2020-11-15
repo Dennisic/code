@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>02_模板语法</title>
+  </head>
+  <body>
+    <!--
+      1. 模板的理解:
+        动态的html页面
+        包含了一些JS语法代码
+          双大括号表达式
+          指令(以v-开头的自定义标签属性)
+      2. 双大括号表达式
+        语法: {{exp}} 或 {{{exp}}}
+        功能: 向页面输出数据
+        可以调用对象的方法
+      3. 指令一: 强制数据绑定
+        功能: 指定变化的属性值
+        完整写法:
+          v-bind:xxx='yyy'  //yyy会作为表达式解析执行
+        简洁写法:
+          :xxx='yyy'
+      4. 指令二: 绑定事件监听
+        功能: 绑定指定事件名的回调函数
+        完整写法:
+          v-on:click='xxx'
+        简洁写法:
+          @click='xxx'
+      -->
+    <div id="app">
+      <h2>1. 双大括号表达式</h2>
+      <p>{{msg}}</p>
+      <h2>2. 指令一: 强制数据绑定</h2>
+      <input type="text" value="msg" />
+      <input type="text" v-bind:value="msg" />
+      <!-- v-bind简写 -->
+      <input type="text" :value="msg" />
+      <h2>3. 指令二: 绑定事件监听</h2>
+      <!-- 给button按钮绑定click事件，事件的回调函数是handleClick -->
+      <button v-on:click="handleClick">按钮1</button>
+      <!-- v-on简写 -->
+      <button @click="handleClick">按钮2</button>
+      <!-- input事件：当input的值发生变化时触发 -->
+      <input type="text" @input="handleInput" />
+      <!-- change：当input失去焦点并且值发生变化才会触发 -->
+      <input type="text" @change="handleChange" />
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      /*
+        v-model 双向数据绑定
+        {{JS表达式}}  只能用于元素内部显示的内容，不能用于标签属性值
+        v-bind 强制绑定数据（单向数据绑定）
+          给元素标签的某个属性强制绑定js数据
+          简写 :
+          <input type="text" value="msg" />  值就是msg
+          <input type="text" :value="msg" /> 值会去vm上找msg属性，并返回值
+        v-on 绑定DOM事件
+          简写 @
+      */
+
+      new Vue({
+        el: "#app",
+        data: {
+          // 定义非函数数据
+          msg: "hello vue",
+        },
+        methods: {
+          // 定义n个方法 --> 一般作为事件回调函数
+          handleClick: function (event) {
+            console.log(event);
+            // this指向：指向vue实例对象vm
+            console.log(this);
+          },
+          // ES6 对象简写
+          handleInput(event) {
+            console.log(event.target.value);
+          },
+          handleChange(event) {
+            console.log(event.target.value);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
